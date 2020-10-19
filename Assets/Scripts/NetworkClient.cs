@@ -119,10 +119,13 @@ public class NetworkClient : MonoBehaviour
 
                 Debug.Log("Server update message received! ");
                 Debug.Log("# of Players : " + suMsg.players.Count);
-                ServerListId.Clear();
+                
+
+                List<string> tempListId = new List<string>();
+
                 foreach (NetworkObjects.NetworkPlayer player in suMsg.players)
                 {
-                    ServerListId.Add(player.id);
+                    tempListId.Add(player.id);
                     Debug.Log(" >>>>>> ID : " + player.id);
                     if (!clientList.ContainsKey(player.id))
                     {
@@ -134,7 +137,8 @@ public class NetworkClient : MonoBehaviour
                         clientList[player.id].GetComponent<Renderer>().material.color = player.cubeColor;
                     }
                 }
-
+                ServerListId.Clear();
+                ServerListId = tempListId;
                 break;
             default:
                 Debug.Log("Unrecognized message received!");
